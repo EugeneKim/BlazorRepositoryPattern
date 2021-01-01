@@ -5,3 +5,4 @@ dotnet: 5.0
 script:
   - dotnet restore
   - dotnet build
+  - dotnet test ./tests/  
