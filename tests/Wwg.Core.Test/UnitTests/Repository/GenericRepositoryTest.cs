@@ -40,7 +40,7 @@ namespace Wwg.Core.Test.UnitTests.Repository
 		public GenericRepositoryTestFixture()
 		{
 			var options = new DbContextOptionsBuilder<WordContext>()
-				.UseInMemoryDatabase("MockDatabase")
+				.UseInMemoryDatabase("MockGenericRepositoryDatabase")
 				.Options;
 
 			WordContext = new WordContext(options);

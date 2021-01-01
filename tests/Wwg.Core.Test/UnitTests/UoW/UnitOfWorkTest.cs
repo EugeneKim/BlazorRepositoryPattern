@@ -104,7 +104,7 @@ namespace Wwg.Core.Test.UnitTests.UoW
 		public UnitOfWorkTestFixture()
 		{
 			var options = new DbContextOptionsBuilder<WordContext>()
-				.UseInMemoryDatabase("MockDatabase")
+				.UseInMemoryDatabase("MockUnitOfWorkDatabase")
 				.Options;
 
 			WordContext = new WordContext(options);
