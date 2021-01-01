@@ -1,0 +1,102 @@
+﻿@page "/editword"
+@page "/editword/{Word}"
+@using EgBlazorComponents.Spinner
+@using EgBlazorComponents.Form
+
+<EgSpinner @ref="spinner" />
+
+<div class="container-fluid">
+	<EditForm Model="@wordModel" OnSubmit="OnSubmitAsync">
+
+		<!--
+			ObjectGraphDataAnnotationsValidator is provided as a separate package until merged into BCL.
+			https://www.nuget.org/packages/Microsoft.AspNetCore.Components.DataAnnotations.Validation
+			PM> Install-Package Microsoft.AspNetCore.Components.DataAnnotations.Validation -Version 3.2.0-rc1.20223.4
+		-->
+		<ObjectGraphDataAnnotationsValidator />
+		<div class="mb-3">
+			<fieldset disabled=@updateMode>
+				<label class="font-weight-bold" for="inputCity">Word</label>
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="right" title="Seach and populate by Dictonary service"
+								@onclick="(() => OnSearchWordAsync(wordModel.Name))">
+							<i class="oi oi-magnifying-glass"></i>
+						</button>
+					</div>
+					<InputText @bind-Value="wordModel.Name" class="form-control" />
+					<div class="input-group-append">
+						<button type="button" class="btn btn-primary btn-sm" @onclick="(() => wordModel.Name = string.Empty)">
+							<i class="oi oi-delete"></i>
+						</button>
+					</div>
+				</div>
+				<ValidationMessage For="() => wordModel.Name" />
+			</fieldset>
+		</div>
+
+		<div class="mb-3">
+			<EgInputSelectEnum @bind-Value="wordModel.Level" class="custom-select" />
+			<ValidationMessage For="() => wordModel.Level" />
+		</div>
+
+		<div class="mb-3">
+			<label class="font-weight-bold">Definitions</label>
+			<button type="button" class="btn btn-primary btn-sm" @onclick="OnAddDefinition">
+				<i class="oi oi-plus"></i> Add
+			</button>
+			<ValidationMessage For="() => wordModel.Definitions" />
+		</div>
+
+		@for (var i = 0; i < wordModel.Definitions.Count; i++)
+		{
+			var definitionModel = wordModel.Definitions[i];
+
+			<div class="card mb-5 bg-light">
+				<div class="card-body">
+
+					<div class="form-group">
+						<div class="mb-3">
+
+							<label for="inputPartOfSpeech">Part Of Speech</label>
+							<button type="button" class="btn btn-primary btn-sm float-right" @onclick="(() => OnDeleteDefinition(definitionModel))">
+								<i class="oi oi-trash"></i>
+							</button>
+
+							<EgInputSelectEnum @bind-Value="definitionModel.PartOfSpeech" class="custom-select" />
+							<ValidationMessage For="() => definitionModel.PartOfSpeech" />
+						</div>
+
+						<div class="mb-3">
+							<label for="inputDefinition">Definition</label>
+							<InputText @bind-Value="definitionModel.Define" class="form-control" id="inputDefinition" />
+							<ValidationMessage For="() => definitionModel.Define" />
+						</div>
+
+						<div class="mb-3">
+							<label for="inputExamples">Examples</label>
+							<InputTextArea @bind-Value="definitionModel.Example" class="form-control h-25" id="inputExamples" placeholder="Add example(s) here..." />
+							<ValidationMessage For="() => definitionModel.Example" />
+						</div>
+
+						<div class="mb-3">
+							<label for="inputSynonyms">Synonyms <small class="text-muted">(Comma-separated)</small></label>
+							<InputText @bind-Value="definitionModel.Synonyms" class="form-control" id="inputSynonyms" placeholder="acamedy,college,phrontistery" />
+							<ValidationMessage For="() => definitionModel.Synonyms" />
+						</div>
+
+						<div class="mb-3">
+							<label for="inputAntonyms">Antonyms <small class="text-muted">(Comma-separated)</small></label>
+							<InputText @bind-Value="definitionModel.Antonyms" class="form-control" id="inputAntonyms" placeholder="fun,home,conceal" />
+							<ValidationMessage For="() => definitionModel.Antonyms" />
+						</div>
+					</div>
+
+				</div>
+			</div>
+		}
+
+		<hr class="mb-4">
+		<button class="btn btn-primary btn-block" type="submit">Submit</button>
+	</EditForm>
+</div>

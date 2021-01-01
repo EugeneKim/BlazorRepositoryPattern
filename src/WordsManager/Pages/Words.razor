@@ -1,0 +1,14 @@
+﻿@page "/words"
+@using EgBlazorComponents.Table
+
+<EgTable DataContext="@words"
+		 Searchable="true"
+		 Pageable="true" Total="@totalWords" PageSize="@pageSize"
+		 OnRead="@OnReadAsync">
+	<EgColumn Field="Name" />
+	<EgColumn Field="Level" />
+	<EgCommandColumn Title="Action">
+		<EgCommandButton Caption="Delete" OnClick="OnDeleteCommandAsync" />
+		<EgCommandButton Caption="Edit" OnClick="OnEditCommand" />
+	</EgCommandColumn>
+</EgTable>
