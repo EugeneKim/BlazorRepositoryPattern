@@ -5,4 +5,5 @@ dotnet: 5.0
 script:
   - dotnet restore
   - dotnet build
-  - dotnet test ./tests/  
+  - dotnet test ./tests/Wwg.Core.Test/
+  - dotnet test ./tests/Wwg.DictionaryServices.Test/
